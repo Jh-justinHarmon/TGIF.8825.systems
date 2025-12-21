@@ -34,7 +34,10 @@ export const initiatives = pgTable("initiatives", {
   scripts: text("scripts").array(),
 });
 
-export const insertInitiativeSchema = createInsertSchema(initiatives).omit({ id: true });
+export const insertInitiativeSchema = createInsertSchema(initiatives).omit({ id: true }).extend({
+  name: z.string().min(1, "Name is required"),
+  type: z.string().min(1, "Type is required"),
+});
 export type InsertInitiative = z.infer<typeof insertInitiativeSchema>;
 export type Initiative = typeof initiatives.$inferSelect;
 
@@ -53,7 +56,9 @@ export const franchiseGroups = pgTable("franchise_groups", {
   notes: text("notes"),
 });
 
-export const insertFranchiseGroupSchema = createInsertSchema(franchiseGroups).omit({ id: true });
+export const insertFranchiseGroupSchema = createInsertSchema(franchiseGroups).omit({ id: true }).extend({
+  name: z.string().min(1, "Name is required"),
+});
 export type InsertFranchiseGroup = z.infer<typeof insertFranchiseGroupSchema>;
 export type FranchiseGroup = typeof franchiseGroups.$inferSelect;
 
@@ -71,7 +76,10 @@ export const deliverables = pgTable("deliverables", {
   status: text("status").default("draft"), // "draft" | "review" | "final"
 });
 
-export const insertDeliverableSchema = createInsertSchema(deliverables).omit({ id: true });
+export const insertDeliverableSchema = createInsertSchema(deliverables).omit({ id: true }).extend({
+  title: z.string().min(1, "Title is required"),
+  type: z.string().min(1, "Type is required"),
+});
 export type InsertDeliverable = z.infer<typeof insertDeliverableSchema>;
 export type Deliverable = typeof deliverables.$inferSelect;
 
@@ -88,7 +96,9 @@ export const issues = pgTable("issues", {
   resolvedAt: text("resolved_at"),
 });
 
-export const insertIssueSchema = createInsertSchema(issues).omit({ id: true });
+export const insertIssueSchema = createInsertSchema(issues).omit({ id: true }).extend({
+  title: z.string().min(1, "Title is required"),
+});
 export type InsertIssue = z.infer<typeof insertIssueSchema>;
 export type Issue = typeof issues.$inferSelect;
 
