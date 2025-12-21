@@ -1,0 +1,755 @@
+{
+  "brain_version": "3.0",
+  "export_date": "2025-12-18T18:01:13.702424",
+  "purpose": "Complete 8825 system context for LLM transport",
+  "auto_generated": true,
+  "generation_trigger": "System health monitor threshold reached",
+  "system_architecture": {
+    "version": "3.0",
+    "structure": {
+      "core": "8825_core/ - Shareable system (protocols, agents, workflows)",
+      "users": "users/justin_harmon/ - Private user data",
+      "focuses": "focuses/{hcss,joju,jh_assistant}/ - Team-specific workspaces",
+      "index": "8825_index/ - Fast discovery layer"
+    }
+  },
+  "key_locations": {
+    "system_root": "/Users/justinharmon/Hammer Consulting Dropbox/Justin Harmon/Public/8825/8825-Jh",
+    "inbox": "~/Downloads/8825_inbox/",
+    "brain_transport": "/Users/justinharmon/Documents/8825_BRAIN_TRANSPORT.json",
+    "philosophy": "/Users/justinharmon/Hammer Consulting Dropbox/Justin Harmon/Public/8825/8825-Jh/PHILOSOPHY.md"
+  },
+  "active_launchagents": {
+    "com.8825.inbox-pipeline": {
+      "status": "loaded",
+      "pid": null
+    },
+    "com.8825.project-planning": {
+      "status": "running",
+      "pid": "82672"
+    },
+    "com.8825.contacts.nightly": {
+      "status": "loaded",
+      "pid": null
+    }
+  },
+  "available_integrations": {
+    "accountant_tools": {
+      "status": "available",
+      "scripts": [
+        {
+          "script": "test_api.py",
+          "purpose": "Quick API test script - tests the accountant tools endpoints without Excel."
+        }
+      ]
+    },
+    "google": {
+      "status": "available",
+      "scripts": [
+        {
+          "script": "list_folder_contents.py",
+          "purpose": "List contents of a specific Google Drive folder"
+        },
+        {
+          "script": "add_docs_scope.py",
+          "purpose": "Add Google Docs scope to existing OAuth credentials."
+        },
+        {
+          "script": "calendar_sync.py",
+          "purpose": "HCSS Calendar Sync"
+        },
+        {
+          "script": "download_attachment.py",
+          "purpose": "Download attachments from Gmail messages."
+        },
+        {
+          "script": "search_shared_with_me.py",
+          "purpose": "Search in \"Shared with me\" for folders"
+        },
+        {
+          "script": "append_bills_to_sheet.py",
+          "purpose": "Append bills from CSV to Google Sheet Bills Registry"
+        },
+        {
+          "script": "bill_processor.py",
+          "purpose": "8825 Bill Processor"
+        },
+        {
+          "script": "calendar_screenshot_sync.py",
+          "purpose": "HCSS Calendar Screenshot Sync"
+        },
+        {
+          "script": "test_docs_exporter.py",
+          "purpose": "Test script for Google Docs exporter."
+        },
+        {
+          "script": "parse_excel.py",
+          "purpose": "Parse Excel files and output as various formats."
+        },
+        {
+          "script": "force_access_folder.py",
+          "purpose": "Try to force access a folder by ID with different API methods"
+        },
+        {
+          "script": "find_drive_folder.py",
+          "purpose": "Find and access Google Drive folders"
+        },
+        {
+          "script": "search_gmail.py",
+          "purpose": "Search Gmail for specific emails"
+        },
+        {
+          "script": "get_email_details.py",
+          "purpose": "Get full details of a specific email"
+        },
+        {
+          "script": "list_all_shared_folders.py",
+          "purpose": "List all folders shared with you in Google Drive"
+        }
+      ]
+    },
+    "reddit": {
+      "status": "available",
+      "scripts": [
+        {
+          "script": "reddit_watcher.py",
+          "purpose": "Reddit Watcher for r/joju"
+        }
+      ]
+    },
+    "dropbox": {
+      "status": "available",
+      "scripts": [
+        {
+          "script": "local_miner.py",
+          "purpose": "Joju Local Contribution Miner - MVP"
+        },
+        {
+          "script": "dropbox_miner.py",
+          "purpose": "Joju Dropbox Contribution Miner - MVP"
+        }
+      ]
+    },
+    "departure_calculator": {
+      "status": "available",
+      "scripts": [
+        {
+          "script": "soccer_advisor.py",
+          "purpose": "Weekend Soccer Advisor"
+        }
+      ]
+    },
+    "figjam": {
+      "status": "available",
+      "scripts": [
+        {
+          "script": "sticky_processor.py",
+          "purpose": "Sticky Note Processor"
+        },
+        {
+          "script": "vision_sticky_processor.py",
+          "purpose": "Google Vision Sticky Note Processor"
+        },
+        {
+          "script": "simple_sticky_ocr.py",
+          "purpose": "Simple Sticky OCR"
+        },
+        {
+          "script": "figjam_api.py",
+          "purpose": "FigJam API Client"
+        }
+      ]
+    },
+    "goose": {
+      "status": "available",
+      "scripts": [
+        {
+          "script": "task_queue.py",
+          "purpose": "Goose Task Queue Manager"
+        },
+        {
+          "script": "goose_engine.py",
+          "purpose": "Goose Focus - Workflow & Agent Execution Engine"
+        },
+        {
+          "script": "goose_supervisor.py",
+          "purpose": "Goose Supervisor"
+        },
+        {
+          "script": "server.py",
+          "purpose": "8825 MCP Bridge for Goose - Production Ready"
+        }
+      ]
+    }
+  },
+  "workflows": {
+    "otter": {
+      "status": "available",
+      "purpose": "** Ready for Gmail OAuth setup"
+    },
+    "meeting_automation": {
+      "status": "available",
+      "purpose": "** Production Ready"
+    },
+    "learning_integration": {
+      "status": "available",
+      "purpose": "** Automatically process `~learning` files, evaluate what's been integrated, propose integration paths, and delete bloat."
+    }
+  },
+  "mcp_servers": {},
+  "projects": [
+    {
+      "id": "8825_HCSS",
+      "project": "HCSS",
+      "description": "HCSS consulting projects including ATX Love nonprofit initiative and strategic partnerships",
+      "tagline": "HCSS process design, AI-driven operational support, and grant-funded collaboration",
+      "last_updated": "2025-11-02"
+    },
+    {
+      "id": "8825_76",
+      "project": "8825_76",
+      "description": "TrustyBits Inc. parent organization - team collaboration, enterprise workflows, integration registry, and AI orchestration framework",
+      "last_updated": "2025-11-03"
+    },
+    {
+      "id": "8825_00-data_sources",
+      "project": "8825_00-data_sources"
+    },
+    {
+      "id": "8825_00-library_miner",
+      "project": "library_miner",
+      "description": "This library system - mining workflows and prompt engineering"
+    },
+    {
+      "id": "8825_00-pmce",
+      "project": "8825_pmce",
+      "description": "Persistent Memory Context Engine - autonomous JSON documents that live in user's cloud, understand their own context, and get smarter over time",
+      "last_updated": "2025-11-02"
+    },
+    {
+      "id": "8825_HCSS-RAL",
+      "project": "HCSS-RAL",
+      "description": "Reinsurance Associates LLC (RAL) portal development and management - Angular + Azure platform",
+      "tagline": "System stability, governance, and architectural resilience for RAL Portal 2.0",
+      "last_updated": "2025-11-02"
+    },
+    {
+      "id": "8825_HCSS-TGIF",
+      "project": "HCSS-TGIF",
+      "description": "Restaurant operations modernization project - Sysco, Toast, NetSuite integration",
+      "tagline": "Automate meeting mining and decision capture for rollout governance",
+      "priority_status": "Top Priority \u2013 first test environment for Chat Mining Agent",
+      "last_updated": "2025-11-02"
+    },
+    {
+      "id": "8825_onboarding",
+      "project": "8825_onboarding",
+      "description": "Central warehouse for all 8825 client onboarding processes, demo creation protocols, setup automation, and onboarding levels from demos to full mining and MVP implementation",
+      "last_updated": "2025-11-03T08:40:00Z"
+    },
+    {
+      "id": "8825_Jh",
+      "project": "jh_personal",
+      "description": "Justin Harmon personal context - financial projections, aspirations, philosophy, home projects, 7247 property, personal finance. Includes jh-assistant integration layer for all task, time, calendar, and financial tools.",
+      "last_updated": "2025-11-10"
+    },
+    {
+      "id": "8825_00-general",
+      "project": "general",
+      "description": "Cross-project patterns and general-purpose tools",
+      "last_updated": "2025-10-30"
+    },
+    {
+      "id": "8825_76-joju",
+      "project": "joju",
+      "description": "Professional OS ecosystem - proof-based career platform",
+      "last_updated": "2025-11-03"
+    },
+    {
+      "id": "8825_76-joju_Jh-v00",
+      "project": "8825_76-joju_Jh-v00"
+    },
+    {
+      "id": "8825_00-dli_orchestrator",
+      "project": "dli_orchestrator",
+      "description": "Define and implement DLI Router MCP as the lead multi-agent orchestrator for 8825, with Jh Brain as the meta-level governance and guidance layer.",
+      "last_updated": "2025-12-07"
+    },
+    {
+      "id": "8825_00-agents",
+      "project": "agent_registry",
+      "description": "Universal registry of all agent capabilities with compressed WCB schemas for lossless reconstruction",
+      "last_updated": "2025-11-01"
+    },
+    {
+      "id": "8825_76-joju_Jh-v01",
+      "project": "8825_76-joju_Jh-v01"
+    },
+    {
+      "id": "8825_76-forge",
+      "project": "the_forge",
+      "description": "Mission-based bounty environment and agency arm within TrustyBits. Professional creative execution where creators get paid for mission-driven work.",
+      "last_updated": "2025-11-01"
+    },
+    {
+      "id": "8825_LHL-re",
+      "project": "lhl_re",
+      "description": "Real estate listing automation & creative pipeline - MLS content generation with LSH voice standards + Rapid Response Agent (RRA) incubator",
+      "last_updated": "2025-11-02"
+    }
+  ],
+  "recent_capabilities": {
+    "timestamp": "2025-12-07T04:00:00",
+    "summary": "100% Google Agent Blueprint Alignment - Level 0-4 Complete",
+    "new_systems": {
+      "transcript_intelligence": {
+        "status": "production_ready",
+        "location": "8825_core/intelligence/",
+        "capabilities": [
+          "Ingest transcripts with Justinizer cleaning",
+          "Extract pain points using LLM analysis",
+          "Mine opportunities from pain points",
+          "Generate HTML presentation decks",
+          "Generate one-page briefs (HTML + Google Docs export)",
+          "Full pipeline: ingest \u2192 extract \u2192 mine \u2192 generate"
+        ],
+        "mcp_server": "transcript-intelligence",
+        "tools": [
+          "mcp7_ingest_transcript",
+          "mcp7_extract_pain_points",
+          "mcp7_mine_opportunities",
+          "mcp7_generate_deck",
+          "mcp7_generate_one_pager",
+          "mcp7_full_pipeline"
+        ],
+        "storage": "Qdrant vector database for semantic search",
+        "outputs": {
+          "briefs": "8825_core/intelligence/briefs/",
+          "decks": "8825_core/intelligence/decks/",
+          "opportunities": "8825_core/intelligence/opportunities/"
+        }
+      },
+      "competitive_analysis": {
+        "status": "production_ready",
+        "location": "8825_core/agents/competitive/",
+        "capabilities": [
+          "Deep dive company research",
+          "Multi-page web scraping with cost tracking",
+          "LLM-powered analysis and synthesis",
+          "JSON profile generation",
+          "Markdown brief generation",
+          "Google Docs export"
+        ],
+        "agents": [
+          "competitive_agent_v2.py - Main orchestrator",
+          "clinical_scribe_competitive.py - Healthcare vertical"
+        ],
+        "outputs": {
+          "deep_dives": "data/company_deep_dives/",
+          "jobs": "data/competitive_jobs/"
+        },
+        "scripts": [
+          "comp_jobs.sh - Run competitive analysis",
+          "run_competitive_job.sh - Execute single job"
+        ]
+      },
+      "google_integrations_expanded": {
+        "status": "production_ready",
+        "location": "8825_core/integrations/google/",
+        "new_capabilities": [
+          "Google Docs export (HTML \u2192 Docs)",
+          "Google Sheets creation and population",
+          "Google Forms creation",
+          "Multi-document export workflows"
+        ],
+        "scripts": [
+          "docs_exporter.py - HTML to Google Docs",
+          "create_112225_af_sheet.py - Auto-generate sheets",
+          "create_112225_af_form.py - Auto-generate forms",
+          "export_competitive_analysis.py - Export comp analysis",
+          "export_bsw_cardiology_pilot.py - Export pilot docs"
+        ],
+        "documentation": "8825_core/integrations/google/CAPABILITIES.md"
+      },
+      "dli_breadcrumb_system": {
+        "status": "production_ready",
+        "location": "8825_core/intelligence/dli_router_mcp/",
+        "capabilities": [
+          "Plant DLI triggers in files for future deep dives",
+          "Track trigger index across system",
+          "Route to DLI when conditions met",
+          "Cost-aware deep dive execution"
+        ],
+        "schema": "8825_core/protocols/DLI_BREADCRUMB_SCHEMA.md",
+        "scripts": [
+          "scripts/list_dli_triggers.sh - List all triggers",
+          "scripts/update_dli_trigger_index.sh - Update index"
+        ],
+        "index": "data/.dli_trigger_index.json"
+      },
+      "otter_automation": {
+        "status": "production_ready",
+        "location": "8825_core/workflows/otter/",
+        "capabilities": [
+          "Gmail polling for Otter transcripts",
+          "Automatic routing by meeting type",
+          "HCSS meeting handler",
+          "JH voice memo handler",
+          "Joju product handler",
+          "Manual queue processing"
+        ],
+        "scripts": [
+          "scripts/gmail_otter_poller.py - Poll Gmail",
+          "scripts/otter_router.py - Route transcripts",
+          "scripts/otter_intake_bridge.py - Bridge to HCSS",
+          "otter-health.sh - Health check"
+        ],
+        "handlers": [
+          "handlers/hcss_meeting_handler.py",
+          "handlers/jh_learning_handler.py",
+          "handlers/jh_voice_memo_handler.py",
+          "handlers/joju_product_handler.py",
+          "handlers/manual_queue_handler.py"
+        ],
+        "install": "workflows/meeting_automation/install_otter_poller.sh"
+      },
+      "diagram_generation": {
+        "status": "production_ready",
+        "location": "8825_core/tools/diagrams/",
+        "capabilities": [
+          "JSON \u2192 Mermaid diagram generation",
+          "Kroki rendering (SVG, PNG)",
+          "Template-based diagram creation",
+          "Support for flowcharts, sequence, state diagrams"
+        ],
+        "renderer": "render_kroki.py",
+        "templates": "templates/*.json",
+        "outputs": "output/"
+      },
+      "forge_marketplace": {
+        "status": "design_complete",
+        "location": "8825_core/marketplace/",
+        "artifacts": [
+          "FORGE_PRESENTATION_STRONG_VERSION_2025-11-22.txt",
+          "FORGE_PRESENTATION_STRONG_VERSION_2025-11-22.docx"
+        ],
+        "diagrams": [
+          "forge_overview",
+          "forge_workshop_session",
+          "forge_work_routing_console",
+          "forge_player_constellation",
+          "forge_experiment_ladder",
+          "forge_feedback_loop"
+        ]
+      },
+      "ral_email_system": {
+        "status": "ready",
+        "location": "8825_core/mcp/ral_mcp/",
+        "capabilities": [
+          "Fetch RAL emails via Gmail API",
+          "OAuth authentication",
+          "Email filtering and routing"
+        ],
+        "script": "fetch_ral_emails.sh"
+      },
+      "mobile_downloads_mining": {
+        "status": "complete",
+        "capabilities": [
+          "DLI file retrieval from mobile downloads",
+          "Fast file access via MCP",
+          "Pattern-based file discovery"
+        ]
+      },
+      "export_console": {
+        "status": "production_ready",
+        "location": "8825_core/tools/export_console/",
+        "capabilities": [
+          "Live Markdown preview via md_to_html",
+          "Template-aware styling (CSS per template)",
+          "Export to HTML with embedded styles",
+          "Export to DOCX via Word templates",
+          "Direct Cascade bridge (/cascade-export endpoint)",
+          "File browser for project markdown files",
+          "Security: path whitelist, size limits"
+        ],
+        "endpoints": [
+          "GET /status - Environment check",
+          "GET /render - Markdown to HTML preview",
+          "GET /templates - Template registry",
+          "POST /export - Export to HTML/DOCX",
+          "POST /cascade-export - Direct Cascade bridge"
+        ],
+        "templates": "shared/templates/*.docx",
+        "server": "FastAPI on localhost:5050"
+      },
+      "memory_hub_fixes": {
+        "status": "production_ready",
+        "location": "8825_core/brain/memory_assimilator/",
+        "fixes": [
+          "Fixed 422 error (field name mismatch text vs memory_text)",
+          "Added resolved_text property for backward compatibility",
+          "Fixed import errors in docs_search.py",
+          "Added parking lot for uncaptured entries (~/.8825/learning_review.md)"
+        ]
+      },
+      "foundry_project": {
+        "status": "ideation",
+        "location": "8825_core/intelligence/projects/foundry/",
+        "concept": "CLI-first learning workflow kit productizing 8825 capabilities",
+        "planned_commands": [
+          "foundry init-project",
+          "foundry add-docs-source",
+          "foundry ingest-transcript",
+          "foundry generate-brief",
+          "foundry capture-learnings",
+          "foundry export-brief"
+        ],
+        "philosophy": "Full learning loop, not docs-only RAG"
+      },
+      "google_agent_blueprint_alignment": {
+        "status": "100%_complete",
+        "location": "8825_core/agents/",
+        "alignment_doc": "8825_core/protocols/AGENT_ARCHITECTURE_GOOGLE_ALIGNMENT.md",
+        "source": "Google 'Introduction to Agents' Whitepaper (Nov 2025)",
+        "levels_implemented": {
+          "level_0": "Core Reasoning - LLM can reason about problems",
+          "level_1": "Connected Problem-Solver - Tools via MCP, RAG via memory-hub",
+          "level_2": "Strategic Problem-Solver - Multi-step planning, DLI context",
+          "level_3": "Collaborative Multi-Agent - orchestrator.py coordinates subagents",
+          "level_4": "Self-Evolving - evolution/self_evolution.py proposes tools/agents"
+        },
+        "new_components": {
+          "orchestrator": {
+            "path": "8825_core/agents/orchestrator.py",
+            "description": "Level 3 Multi-Agent Coordinator",
+            "features": [
+              "Subagent coordination",
+              "Quality checking",
+              "Copywriter formatting",
+              "OpenTelemetry tracing"
+            ]
+          },
+          "guardrails": {
+            "path": "8825_core/agents/guardrails.py",
+            "description": "Security filtering - prompt injection defense, PII detection",
+            "features": [
+              "Input sanitization",
+              "Output validation",
+              "Tool permission checking"
+            ]
+          },
+          "a2a_protocol": {
+            "path": "8825_core/agents/a2a.py",
+            "description": "Agent-to-Agent protocol for discovery and delegation",
+            "features": [
+              "AgentCard generation",
+              "Task delegation",
+              "Agent discovery"
+            ]
+          },
+          "model_router": {
+            "path": "8825_core/agents/model_router.py",
+            "description": "Intelligent model selection",
+            "tiers": [
+              "FLASH (gpt-4o-mini)",
+              "STANDARD (gpt-4o)",
+              "PRO (gpt-4-turbo)",
+              "REASONING (o1-mini)"
+            ]
+          },
+          "agent_gym": {
+            "path": "8825_core/agents/gym/agent_gym.py",
+            "description": "Simulation environment for agent testing",
+            "scenarios": [
+              "query",
+              "transcript",
+              "adversarial",
+              "multi-turn",
+              "stress",
+              "task"
+            ]
+          },
+          "self_evolution": {
+            "path": "8825_core/agents/evolution/self_evolution.py",
+            "description": "Level 4 foundation - proposes new tools/agents",
+            "features": [
+              "Tool proposals",
+              "Agent proposals",
+              "Trace pattern analysis",
+              "HITL approval"
+            ]
+          },
+          "code_sandbox": {
+            "path": "8825_core/agents/sandbox/code_sandbox.py",
+            "description": "Docker-based isolated code execution"
+          },
+          "telemetry": {
+            "path": "8825_core/agents/telemetry.py",
+            "description": "OpenTelemetry-style tracing with JSON persistence"
+          },
+          "agent_ci": {
+            "path": "8825_core/agents/ci/agent_ci.py",
+            "description": "CI/CD pipeline with baseline comparison and regression detection"
+          },
+          "credential_manager": {
+            "path": "8825_core/system/credential_manager.py",
+            "description": "Per-agent credentials and budget management"
+          }
+        },
+        "competitive_position": "Likely top 1% of implementations - most frameworks implement 30-50% of blueprint"
+      }
+    },
+    "mcp_servers_active": {
+      "8825-pattern-engine": "Pattern extraction and entity recognition",
+      "dli-router": "Deep dive routing with cost tracking",
+      "figma-make-transformer": "Figma Make \u2192 Joju component transformation",
+      "hcss-bridge": "HCSS email/transcript ingestion",
+      "jh-brain": "Canonical tool registry - query 'what tool does X' before searching codebase",
+      "jh-mcp": "JH personal workflows and OCR routing",
+      "memory-hub": "Library search, session capture, learning cleanup",
+      "ocr-mcp": "Image/PDF text extraction",
+      "ollama-bridge": "Local LLM (Phi-2) for zero-cost queries",
+      "transcript-intelligence": "Full transcript \u2192 opportunity pipeline"
+    },
+    "jh_brain_capabilities": {
+      "purpose": "Canonical registry of 8825 tools - ALWAYS query before searching codebase",
+      "location": "8825_core/mcp_servers/jh_brain/",
+      "mcp_tool": "mcp4_jh_brain_query",
+      "usage": "mcp4_jh_brain_query(need='export docx') \u2192 returns canonical tool path",
+      "registered_tools": [
+        "Export Console (http_service) - /cascade-export for direct Cascade exports",
+        "DLI Router (mcp) - deep dive with cost tracking",
+        "HCSS Bridge (mcp) - email/transcript ingestion",
+        "Memory Hub (mcp) - Library search, session capture",
+        "OCR MCP (mcp) - image/PDF text extraction",
+        "Pattern Engine (mcp) - entity extraction, intent detection",
+        "Transcript Intelligence (mcp) - transcript \u2192 opportunity pipeline"
+      ],
+      "when_to_use": "Before grepping for internal tools, ask Jh Brain first"
+    },
+    "documentation_created": [
+      "TRANSCRIPT_INTELLIGENCE_COMPLETE.md",
+      "COMPETITIVE_AGENT_V2_COMPLETE.md",
+      "COMPETITIVE_ANALYSIS_AI_MEDICAL_SCRIBES.md",
+      "DLI_BREADCRUMB_SYSTEM_COMPLETE.md",
+      "RAL_EMAIL_SYSTEM_READY.md",
+      "MOBILE_DOWNLOADS_MINING_COMPLETE.md",
+      "EXTERNAL_LLM_STARTERS_COMPLETE.md",
+      "GOOSE_QUICK_START.md",
+      "GOOSE_UPGRADE_SUMMARY.md",
+      "8825_core/protocols/DLI_BREADCRUMB_SCHEMA.md",
+      "8825_core/protocols/GOOGLE_INTEGRATION_CAPABILITIES.md",
+      "8825_core/protocols/MCP_SERVER_IMPLEMENTATION.md",
+      "8825_core/protocols/WINDSURF_MCP_CONFIGURATION.md",
+      "8825_core/intelligence/INTEGRATION_ROADMAP.md",
+      "8825_core/intelligence/QUICK_START.md",
+      "8825_core/intelligence/TRANSCRIPT_INTELLIGENCE_README.md"
+    ],
+    "library_entries_created": [
+      "K-01865: Forge Marketplace Concept",
+      "K-01866: Game-Style Bounty Simulation",
+      "K-01867: Mermaid Diagram Pipeline",
+      "K-01868: Markdown to Word Export Utility",
+      "K-01869: Pitch Anything STRONG Framework",
+      "K-01870: FigJam Workshop Flow",
+      "P-00715: Forge Marketplace Pattern",
+      "P-00716: Bounty Simulation Pattern",
+      "P-00717: Diagram Generation Pattern",
+      "P-00718: Markdown Export Pattern",
+      "P-00719: Presentation Flow Pattern",
+      "K-01966: Memory Hub / Assimilator fixes",
+      "K-01967: Export Console architecture",
+      "P-00742: Export Console as canonical path"
+    ],
+    "workflows_enhanced": [
+      "Otter transcript automation (Gmail \u2192 routing \u2192 handlers)",
+      "Competitive analysis (research \u2192 analyze \u2192 export)",
+      "Transcript intelligence (ingest \u2192 extract \u2192 mine \u2192 present)",
+      "Google Docs export (HTML \u2192 Docs with formatting)",
+      "DLI breadcrumb planting (trigger \u2192 index \u2192 execute)"
+    ],
+    "integration_improvements": [
+      "Google Docs write capability added",
+      "Google Sheets auto-generation",
+      "Google Forms auto-generation",
+      "Qdrant vector database for transcripts",
+      "Justinizer text cleaning integration"
+    ]
+  },
+  "interaction_modes": {
+    "dev_mode": {
+      "purpose": "GO MODE - Execute when plan is clear",
+      "approach": "Do first, minimal discussion",
+      "output": "Terse progress updates",
+      "code": "Only during execution",
+      "use_when": "You have plan and understand it"
+    },
+    "brainstorm_mode": {
+      "purpose": "ROADMAP CREATION - Design solution",
+      "approach": "Analyze, propose architecture with code blocks",
+      "output": "Complete roadmap with implementation",
+      "code": "YES - show patterns, workflows, examples",
+      "use_when": "Exploring ideas, need executable plan"
+    },
+    "teaching_mode": {
+      "purpose": "UNDERSTANDING THE PLAN - Help you comprehend",
+      "approach": "Plain language, analogies, no code",
+      "output": "Conceptual explanations",
+      "code": "NEVER - concepts only",
+      "use_when": "Need to understand before approving"
+    }
+  },
+  "communication_style": {
+    "dev_mode": "Terse, action-focused, no fluff",
+    "brainstorm_mode": "Comprehensive, analytical, code blocks",
+    "teaching_mode": "Conversational, analogies, no code",
+    "general": "Markdown-heavy, bullet lists, scannable"
+  },
+  "critical_rules": {
+    "professional_title": "NEVER change - exact format with slashes",
+    "dev_mode": "Execute immediately when plan is clear",
+    "brainstorm_mode": "Always include code blocks and roadmap",
+    "teaching_mode": "Never show code, only concepts"
+  },
+  "core_thinking_moves": {
+    "_comment": "Fundamental exploration moves - always apply for high-uncertainty/high-impact decisions",
+    "when_to_use": "High-uncertainty, high-impact, or irreversible decisions. New problem spaces.",
+    "moves": {
+      "frame": {
+        "action": "Pick 1-2 lenses before generating ideas",
+        "prevents": "Jumping straight into solutions without defining the problem"
+      },
+      "flip": {
+        "action": "Ask the opposite: 'How would we fail?' / 'What breaks this?'",
+        "prevents": "Only seeing upside, missing failure modes"
+      },
+      "weird": {
+        "action": "One pass of extreme/absurd ideas before converging",
+        "prevents": "Safe incrementalism, 5% variations of the obvious"
+      },
+      "ground": {
+        "action": "Strip to assumptions, constraints, and mechanisms",
+        "prevents": "Hand-wavy fantasy, ideas that can't be tested"
+      }
+    },
+    "rule": "For non-trivial exploration, run at least: 1 frame, 1 flip, 1 weird, 1 ground"
+  },
+  "workflow": {
+    "natural_flow": "Teaching (understand) \u2192 Brainstorm (plan) \u2192 Dev (execute)",
+    "mode_switching": {
+      "explicit": "switch to [mode] mode",
+      "auto_detect": "Based on request type"
+    }
+  },
+  "quick_commands": {
+    "fetch_inbox": "Process files from ~/Downloads/8825_inbox/pending/",
+    "focus_on_jh": "Activate JH personal focus",
+    "focus_on_joju": "Activate Joju/Team 76 focus",
+    "focus_on_hcss": "Activate HCSS client focus",
+    "sync_brain": "Create comprehensive brain sync document",
+    "switch_to_dev_mode": "Enter execution mode",
+    "switch_to_brainstorm_mode": "Enter planning mode",
+    "switch_to_teaching_mode": "Enter learning mode"
+  },
+  "status": "Auto-generated v3.0 system snapshot - 2025-12-18 18:01"
+}
