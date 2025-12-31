@@ -144,7 +144,7 @@ export default function Dashboard() {
                 <p className="text-sm text-muted-foreground">
                   No running initiatives
                 </p>
-                <Button variant="link" size="sm" asChild className="mt-2">
+                <Button variant="ghost" size="sm" asChild className="mt-2">
                   <Link href="/initiatives">Start an initiative</Link>
                 </Button>
               </div>

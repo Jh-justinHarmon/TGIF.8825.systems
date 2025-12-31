@@ -9,6 +9,28 @@ import {
 } from "@shared/schema";
 import { ZodError, z } from "zod";
 
+const TGIF_BRAIN_URL = process.env.TGIF_BRAIN_URL || process.env.BRAIN_URL || "http://127.0.0.1:5160";
+
+async function fetchJsonWithTimeout(url: string, init: RequestInit = {}, timeoutMs = 1500) {
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), timeoutMs);
+  try {
+    const res = await fetch(url, {
+      ...init,
+      signal: controller.signal,
+      headers: {
+        "Content-Type": "application/json",
+        ...(init.headers || {}),
+      },
+    });
+    const text = await res.text();
+    const body = text ? JSON.parse(text) : null;
+    return { ok: res.ok, status: res.status, body };
+  } finally {
+    clearTimeout(timeout);
+  }
+}
+
 function handleValidationError(error: unknown, res: any) {
   if (error instanceof ZodError) {
     return res.status(400).json({
@@ -39,6 +61,55 @@ export async function registerRoutes(
   app: Express
 ): Promise<Server> {
   
+  app.get("/api/brain/health", async (_req, res) => {
+    try {
+      const result = await fetchJsonWithTimeout(`${TGIF_BRAIN_URL}/health`, { method: "GET" }, 1000);
+      if (!result.ok) {
+        return res.status(503).json({ ok: false, upstream: TGIF_BRAIN_URL, status: result.status, body: result.body });
+      }
+      return res.json({ ok: true, upstream: TGIF_BRAIN_URL, body: result.body });
+    } catch (error: any) {
+      return res.status(503).json({ ok: false, upstream: TGIF_BRAIN_URL, error: error?.message || String(error) });
+    }
+  });
+
+  app.post("/api/brain/query", async (req, res) => {
+    const need = typeof req.body?.need === "string" ? req.body.need : "";
+    if (!need) {
+      return res.status(400).json({ error: "need is required" });
+    }
+
+    try {
+      const result = await fetchJsonWithTimeout(
+        `${TGIF_BRAIN_URL}/query`,
+        {
+          method: "POST",
+          body: JSON.stringify({ need }),
+        },
+        1500,
+      );
+      return res.status(result.status).json(result.body);
+    } catch (error: any) {
+      return res.status(503).json({ error: "brain_unavailable", upstream: TGIF_BRAIN_URL, detail: error?.message || String(error) });
+    }
+  });
+
+  app.post("/api/brain/log_use", async (req, res) => {
+    try {
+      const result = await fetchJsonWithTimeout(
+        `${TGIF_BRAIN_URL}/log_use`,
+        {
+          method: "POST",
+          body: JSON.stringify(req.body || {}),
+        },
+        1500,
+      );
+      return res.status(result.status).json(result.body);
+    } catch (error: any) {
+      return res.status(503).json({ error: "brain_unavailable", upstream: TGIF_BRAIN_URL, detail: error?.message || String(error) });
+    }
+  });
+
   app.get("/api/stats", async (_req, res) => {
     const stats = await storage.getStats();
     res.json(stats);
@@ -70,7 +141,7 @@ export async function registerRoutes(
   app.patch("/api/initiatives/:id", async (req, res) => {
     try {
       const validated = updateInitiativeSchema.parse(req.body);
-      const initiative = await storage.updateInitiative(req.params.id, validated);
+      const initiative = await storage.updateInitiative(req.params.id, validated as any);
       if (!initiative) {
         return res.status(404).json({ error: "Initiative not found" });
       }
@@ -114,7 +185,7 @@ export async function registerRoutes(
   app.patch("/api/franchise-groups/:id", async (req, res) => {
     try {
       const validated = updateFranchiseGroupSchema.parse(req.body);
-      const group = await storage.updateFranchiseGroup(req.params.id, validated);
+      const group = await storage.updateFranchiseGroup(req.params.id, validated as any);
       if (!group) {
         return res.status(404).json({ error: "Franchise group not found" });
       }
@@ -158,7 +229,7 @@ export async function registerRoutes(
   app.patch("/api/deliverables/:id", async (req, res) => {
     try {
       const validated = updateDeliverableSchema.parse(req.body);
-      const deliverable = await storage.updateDeliverable(req.params.id, validated);
+      const deliverable = await storage.updateDeliverable(req.params.id, validated as any);
       if (!deliverable) {
         return res.status(404).json({ error: "Deliverable not found" });
       }
@@ -202,7 +273,7 @@ export async function registerRoutes(
   app.patch("/api/issues/:id", async (req, res) => {
     try {
       const validated = updateIssueSchema.parse(req.body);
-      const issue = await storage.updateIssue(req.params.id, validated);
+      const issue = await storage.updateIssue(req.params.id, validated as any);
       if (!issue) {
         return res.status(404).json({ error: "Issue not found" });
       }

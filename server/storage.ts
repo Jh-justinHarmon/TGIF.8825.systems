@@ -10,6 +10,7 @@ import {
   type Issue,
   type InsertIssue,
   type DashboardStats,
+  type AgentStatus,
 } from "@shared/schema";
 import { randomUUID } from "crypto";
 
@@ -179,7 +180,19 @@ export class MemStorage implements IStorage {
 
     initiatives.forEach((i) => {
       const id = randomUUID();
-      this.initiatives.set(id, { ...i, id });
+      const initiative: Initiative = {
+        id,
+        name: i.name,
+        type: i.type,
+        status: (i.status ?? "pending") as AgentStatus,
+        description: i.description ?? null,
+        category: i.category ?? null,
+        purpose: i.purpose ?? null,
+        pid: i.pid ?? null,
+        lastUpdated: i.lastUpdated ?? null,
+        scripts: i.scripts ?? null,
+      };
+      this.initiatives.set(id, initiative);
     });
 
     const franchiseGroups: InsertFranchiseGroup[] = [
@@ -343,7 +356,20 @@ export class MemStorage implements IStorage {
 
     franchiseGroups.forEach((fg) => {
       const id = randomUUID();
-      this.franchiseGroups.set(id, { ...fg, id });
+      const group: FranchiseGroup = {
+        id,
+        name: fg.name,
+        status: fg.status ?? "pending",
+        progress: fg.progress ?? 0,
+        contactName: fg.contactName ?? null,
+        contactEmail: fg.contactEmail ?? null,
+        contactPhone: fg.contactPhone ?? null,
+        locationCount: fg.locationCount ?? 0,
+        accountingSystem: fg.accountingSystem ?? null,
+        laborPayrollSystem: fg.laborPayrollSystem ?? null,
+        notes: fg.notes ?? null,
+      };
+      this.franchiseGroups.set(id, group);
     });
 
     const deliverables: InsertDeliverable[] = [
@@ -439,7 +465,19 @@ export class MemStorage implements IStorage {
 
     deliverables.forEach((d) => {
       const id = randomUUID();
-      this.deliverables.set(id, { ...d, id });
+      const deliverable: Deliverable = {
+        id,
+        title: d.title,
+        type: d.type,
+        status: d.status ?? "draft",
+        description: d.description ?? null,
+        category: d.category ?? null,
+        fileUrl: d.fileUrl ?? null,
+        sheetUrl: d.sheetUrl ?? null,
+        createdAt: d.createdAt ?? null,
+        updatedAt: d.updatedAt ?? null,
+      };
+      this.deliverables.set(id, deliverable);
     });
 
     const issues: InsertIssue[] = [
@@ -507,7 +545,18 @@ export class MemStorage implements IStorage {
 
     issues.forEach((i) => {
       const id = randomUUID();
-      this.issues.set(id, { ...i, id });
+      const issue: Issue = {
+        id,
+        title: i.title,
+        status: i.status ?? "open",
+        priority: i.priority ?? "medium",
+        description: i.description ?? null,
+        createdAt: i.createdAt ?? null,
+        resolvedAt: i.resolvedAt ?? null,
+        assignee: i.assignee ?? null,
+        franchiseGroupId: i.franchiseGroupId ?? null,
+      };
+      this.issues.set(id, issue);
     });
   }
 
@@ -538,7 +587,18 @@ export class MemStorage implements IStorage {
 
   async createInitiative(initiative: InsertInitiative): Promise<Initiative> {
     const id = randomUUID();
-    const newInitiative: Initiative = { ...initiative, id };
+    const newInitiative: Initiative = {
+      id,
+      name: initiative.name,
+      type: initiative.type,
+      status: (initiative.status ?? "pending") as AgentStatus,
+      description: initiative.description ?? null,
+      category: initiative.category ?? null,
+      purpose: initiative.purpose ?? null,
+      pid: initiative.pid ?? null,
+      lastUpdated: initiative.lastUpdated ?? null,
+      scripts: initiative.scripts ?? null,
+    };
     this.initiatives.set(id, newInitiative);
     return newInitiative;
   }
@@ -565,7 +625,19 @@ export class MemStorage implements IStorage {
 
   async createFranchiseGroup(group: InsertFranchiseGroup): Promise<FranchiseGroup> {
     const id = randomUUID();
-    const newGroup: FranchiseGroup = { ...group, id };
+    const newGroup: FranchiseGroup = {
+      id,
+      name: group.name,
+      status: group.status ?? "pending",
+      progress: group.progress ?? 0,
+      contactName: group.contactName ?? null,
+      contactEmail: group.contactEmail ?? null,
+      contactPhone: group.contactPhone ?? null,
+      locationCount: group.locationCount ?? 0,
+      accountingSystem: group.accountingSystem ?? null,
+      laborPayrollSystem: group.laborPayrollSystem ?? null,
+      notes: group.notes ?? null,
+    };
     this.franchiseGroups.set(id, newGroup);
     return newGroup;
   }
@@ -592,7 +664,18 @@ export class MemStorage implements IStorage {
 
   async createDeliverable(deliverable: InsertDeliverable): Promise<Deliverable> {
     const id = randomUUID();
-    const newDeliverable: Deliverable = { ...deliverable, id };
+    const newDeliverable: Deliverable = {
+      id,
+      title: deliverable.title,
+      type: deliverable.type,
+      status: deliverable.status ?? "draft",
+      description: deliverable.description ?? null,
+      category: deliverable.category ?? null,
+      fileUrl: deliverable.fileUrl ?? null,
+      sheetUrl: deliverable.sheetUrl ?? null,
+      createdAt: deliverable.createdAt ?? null,
+      updatedAt: deliverable.updatedAt ?? null,
+    };
     this.deliverables.set(id, newDeliverable);
     return newDeliverable;
   }
@@ -619,7 +702,17 @@ export class MemStorage implements IStorage {
 
   async createIssue(issue: InsertIssue): Promise<Issue> {
     const id = randomUUID();
-    const newIssue: Issue = { ...issue, id };
+    const newIssue: Issue = {
+      id,
+      title: issue.title,
+      status: issue.status ?? "open",
+      priority: issue.priority ?? "medium",
+      description: issue.description ?? null,
+      createdAt: issue.createdAt ?? null,
+      resolvedAt: issue.resolvedAt ?? null,
+      assignee: issue.assignee ?? null,
+      franchiseGroupId: issue.franchiseGroupId ?? null,
+    };
     this.issues.set(id, newIssue);
     return newIssue;
   }
