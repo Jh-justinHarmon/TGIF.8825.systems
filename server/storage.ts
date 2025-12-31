@@ -290,9 +290,9 @@ export class MemStorage implements IStorage {
         type: "spreadsheet",
         category: "tracking",
         fileUrl: null,
-        sheetUrl: "https://www.dropbox.com/scl/fi/vtncasb3a55og0zyc2vc7/TGIF_2026_Rollout_Tracking_UNIFIED.xlsx?rlkey=84rfly8h70iiaynecdzwp6yg7&dl=0",
+        sheetUrl: "https://www.dropbox.com/scl/fi/jkxn7qujz1zqv52ky6dwg/SYSTEM_INTEGRATIONS_ASSESSMENT_PROMPT.md?rlkey=6sn2qu2wurgld3qfvu4j0233m&dl=0",
         createdAt: "2025-11-15",
-        updatedAt: "2025-12-17",
+        updatedAt: "2025-12-31",
         status: "final",
       },
       {
