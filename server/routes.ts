@@ -89,34 +89,40 @@ export async function registerRoutes(
       const franchiseGroups = await storage.getFranchiseGroups();
       const deliverables = await storage.getDeliverables();
       
-      // Build rich client context
+      // Build rich client context in Maestra backend format
+      // The backend expects: summary, page_snapshot, selection, relevant
+      const tgifSummary = `TGIF Phase 2 Franchisee Playbook Dashboard
+
+Current Status:
+- Total Initiatives: ${stats.totalInitiatives} (${stats.runningAgents} running)
+- Franchise Groups: ${stats.franchiseGroupsTotal} total, ${stats.franchiseGroupsCompleted} completed
+- Deliverables: ${stats.deliverables}
+- Open Issues: ${stats.openIssues}
+
+Recent Initiatives:
+${initiatives.slice(0, 3).map(i => `- ${i.name} (${i.type}, ${i.status}): ${i.description || 'No description'}`).join('\n')}
+
+Franchise Groups:
+${franchiseGroups.slice(0, 3).map(g => `- ${g.name}: ${g.status}, ${g.progress || 0}% progress`).join('\n')}
+
+Key Deliverables:
+${deliverables.slice(0, 3).map(d => `- ${d.title} (${d.type}): ${d.status}`).join('\n')}
+
+This is a project management hub for tracking TGIF restaurant system rollout to franchisee groups.`;
+
       const clientContext = {
-        app: "tgif-hub",
-        stats: {
-          totalInitiatives: stats.totalInitiatives,
-          runningAgents: stats.runningAgents,
-          franchiseGroupsTotal: stats.franchiseGroupsTotal,
-          franchiseGroupsCompleted: stats.franchiseGroupsCompleted,
-          deliverables: stats.deliverables,
-          openIssues: stats.openIssues,
+        summary: tgifSummary,
+        page_snapshot: {
+          url: `https://tgif-8825-systems.fly.dev`,
+          title: "TGIF Control - 8825 Dashboard",
+          domain: "tgif-8825-systems.fly.dev",
+          timestamp: new Date().toISOString(),
         },
-        current_initiatives: initiatives.slice(0, 5).map(i => ({
-          name: i.name,
-          type: i.type,
-          status: i.status,
-          description: i.description,
-        })),
-        franchise_groups: franchiseGroups.slice(0, 5).map(g => ({
-          name: g.name,
-          status: g.status,
-          progress: g.progress,
-        })),
-        deliverables_list: deliverables.slice(0, 5).map(d => ({
-          title: d.title,
-          type: d.type,
-          status: d.status,
-        })),
-        context_note: "TGIF Phase 2 Franchisee Playbook - tracking rollout progress, deliverables, and franchise group coordination",
+        relevant: [
+          ...initiatives.slice(0, 2).map(i => ({ type: "initiative", name: i.name, status: i.status })),
+          ...franchiseGroups.slice(0, 2).map(g => ({ type: "franchise_group", name: g.name, status: g.status })),
+          ...deliverables.slice(0, 2).map(d => ({ type: "deliverable", title: d.title, status: d.status })),
+        ],
       };
 
       // Call Maestra backend's advisor endpoint for unified brain access
