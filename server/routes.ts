@@ -78,8 +78,10 @@ export async function registerRoutes(
   app.post("/api/brain/query", async (req, res) => {
     const need = typeof req.body?.need === "string" ? req.body.need : "";
     const sessionId = typeof req.body?.session_id === "string" ? req.body.session_id : "tgif-default";
-    if (!need) {
-      return res.status(400).json({ error: "need is required" });
+    const image = typeof req.body?.image === "string" ? req.body.image : undefined;
+    
+    if (!need && !image) {
+      return res.status(400).json({ error: "need or image is required" });
     }
 
     try {
@@ -110,7 +112,7 @@ ${deliverables.slice(0, 3).map(d => `- ${d.title} (${d.type}): ${d.status}`).joi
 
 This is a project management hub for tracking TGIF restaurant system rollout to franchisee groups.`;
 
-      const clientContext = {
+      const clientContext: any = {
         summary: tgifSummary,
         page_snapshot: {
           url: `https://tgif-8825-systems.fly.dev`,
@@ -124,6 +126,11 @@ This is a project management hub for tracking TGIF restaurant system rollout to 
           ...deliverables.slice(0, 2).map(d => ({ type: "deliverable", title: d.title, status: d.status })),
         ],
       };
+
+      // Add image if provided
+      if (image) {
+        clientContext.page_snapshot.image = image;
+      }
 
       // Call Maestra backend's advisor endpoint for unified brain access
       const result = await fetchJsonWithTimeout(

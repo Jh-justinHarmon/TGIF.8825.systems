@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import { useState, useEffect, useRef } from "react";
-import { MessageCircle, Send, X, Search, Trash2, ChevronRight } from "lucide-react";
+import { MessageCircle, Send, X, Search, Trash2, ChevronRight, Image as ImageIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -13,6 +13,7 @@ interface Message {
   role: "user" | "assistant";
   content: string;
   timestamp: string;
+  image?: string; // base64 image data
 }
 
 interface Conversation {
@@ -63,6 +64,7 @@ export function ChatSidebar() {
   const [isLoading, setIsLoading] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [showHistory, setShowHistory] = useState(false);
+  const [pastedImage, setPastedImage] = useState<string | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -123,14 +125,40 @@ export function ChatSidebar() {
     }
   };
 
+  const handlePaste = async (e: React.ClipboardEvent) => {
+    const items = e.clipboardData?.items;
+    if (!items) return;
+
+    for (const item of Array.from(items)) {
+      if (item.type.startsWith("image/")) {
+        e.preventDefault();
+        const file = item.getAsFile();
+        if (!file) continue;
+
+        const reader = new FileReader();
+        reader.onload = (event) => {
+          const base64 = event.target?.result as string;
+          setPastedImage(base64);
+        };
+        reader.readAsDataURL(file);
+        break;
+      }
+    }
+  };
+
+  const clearImage = () => {
+    setPastedImage(null);
+  };
+
   const sendMessage = async () => {
-    if (!inputValue.trim() || isLoading) return;
+    if ((!inputValue.trim() && !pastedImage) || isLoading) return;
 
     const userMessage: Message = {
       id: generateId(),
       role: "user",
       content: inputValue.trim(),
       timestamp: new Date().toISOString(),
+      image: pastedImage || undefined,
     };
 
     let conv = currentConversation;
@@ -154,13 +182,17 @@ export function ChatSidebar() {
     setCurrentConversation(updatedConv);
     setCurrentConversationId(updatedConv.id);
     setInputValue("");
+    setPastedImage(null);
     setIsLoading(true);
 
     try {
       const response = await fetch("/api/brain/query", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ need: inputValue.trim() }),
+        body: JSON.stringify({ 
+          need: inputValue.trim(),
+          image: pastedImage || undefined,
+        }),
       });
 
       let assistantContent: string;
@@ -364,7 +396,16 @@ export function ChatSidebar() {
                               : "bg-muted"
                           )}
                         >
-                          <p className="whitespace-pre-wrap">{message.content}</p>
+                          {message.image && (
+                            <img 
+                              src={message.image} 
+                              alt="Pasted screenshot" 
+                              className="max-w-full rounded mb-2"
+                            />
+                          )}
+                          {message.content && (
+                            <p className="whitespace-pre-wrap">{message.content}</p>
+                          )}
                           <p className="text-[10px] opacity-60 mt-1">
                             {new Date(message.timestamp).toLocaleTimeString()}
                           </p>
@@ -389,13 +430,31 @@ export function ChatSidebar() {
 
               {/* Input */}
               <div className="border-t border-border p-4">
+                {pastedImage && (
+                  <div className="mb-3 relative inline-block">
+                    <img 
+                      src={pastedImage} 
+                      alt="Pasted screenshot preview" 
+                      className="max-h-32 rounded border border-border"
+                    />
+                    <Button
+                      size="icon"
+                      variant="destructive"
+                      className="absolute -top-2 -right-2 h-6 w-6 rounded-full"
+                      onClick={clearImage}
+                    >
+                      <X className="h-3 w-3" />
+                    </Button>
+                  </div>
+                )}
                 <div className="flex gap-2">
                   <Input
                     ref={inputRef}
-                    placeholder="Ask about TGIF..."
+                    placeholder="Ask about TGIF... (paste images)"
                     value={inputValue}
                     onChange={(e) => setInputValue(e.target.value)}
                     onKeyDown={handleKeyDown}
+                    onPaste={handlePaste}
                     disabled={isLoading}
                     className="flex-1"
                     data-testid="chat-input"
@@ -403,7 +462,7 @@ export function ChatSidebar() {
                   <Button
                     size="icon"
                     onClick={sendMessage}
-                    disabled={!inputValue.trim() || isLoading}
+                    disabled={(!inputValue.trim() && !pastedImage) || isLoading}
                     data-testid="chat-send"
                   >
                     <Send className="h-4 w-4" />
