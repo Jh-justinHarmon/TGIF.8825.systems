@@ -11,6 +11,8 @@ primary_region = 'dfw'
   NODE_ENV = 'production'
   PORT = '8080'
   HOST = '0.0.0.0'
+  # Alpha users connect to unified Maestra backend (JH-Brain integration)
+  BRAIN_URL = 'https://maestra-backend-8825-systems.fly.dev'
 
 [http_service]
   internal_port = 8080

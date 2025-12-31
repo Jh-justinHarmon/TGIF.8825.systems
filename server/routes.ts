@@ -9,7 +9,9 @@ import {
 } from "@shared/schema";
 import { ZodError, z } from "zod";
 
-const TGIF_BRAIN_URL = process.env.TGIF_BRAIN_URL || process.env.BRAIN_URL || "http://127.0.0.1:5160";
+// For alpha users: connect to unified Maestra backend (JH-Brain integration)
+// For production: would use TGIF-specific brain or org-level brain
+const BRAIN_URL = process.env.BRAIN_URL || "http://127.0.0.1:8000";
 
 async function fetchJsonWithTimeout(url: string, init: RequestInit = {}, timeoutMs = 1500) {
   const controller = new AbortController();
@@ -63,41 +65,59 @@ export async function registerRoutes(
   
   app.get("/api/brain/health", async (_req, res) => {
     try {
-      const result = await fetchJsonWithTimeout(`${TGIF_BRAIN_URL}/health`, { method: "GET" }, 1000);
+      const result = await fetchJsonWithTimeout(`${BRAIN_URL}/health`, { method: "GET" }, 1000);
       if (!result.ok) {
-        return res.status(503).json({ ok: false, upstream: TGIF_BRAIN_URL, status: result.status, body: result.body });
+        return res.status(503).json({ ok: false, upstream: BRAIN_URL, status: result.status, body: result.body });
       }
-      return res.json({ ok: true, upstream: TGIF_BRAIN_URL, body: result.body });
+      return res.json({ ok: true, upstream: BRAIN_URL, body: result.body });
     } catch (error: any) {
-      return res.status(503).json({ ok: false, upstream: TGIF_BRAIN_URL, error: error?.message || String(error) });
+      return res.status(503).json({ ok: false, upstream: BRAIN_URL, error: error?.message || String(error) });
     }
   });
 
   app.post("/api/brain/query", async (req, res) => {
     const need = typeof req.body?.need === "string" ? req.body.need : "";
+    const sessionId = typeof req.body?.session_id === "string" ? req.body.session_id : "tgif-default";
     if (!need) {
       return res.status(400).json({ error: "need is required" });
     }
 
     try {
+      // Call Maestra backend's advisor endpoint for unified brain access
       const result = await fetchJsonWithTimeout(
-        `${TGIF_BRAIN_URL}/query`,
+        `${BRAIN_URL}/api/maestra/advisor/ask`,
         {
           method: "POST",
-          body: JSON.stringify({ need }),
+          body: JSON.stringify({
+            session_id: sessionId,
+            user_id: "alpha_jh",
+            message: need,
+            mode: "quick",
+            context_hints: ["tgif", "franchise", "rollout"],
+          }),
         },
-        1500,
+        15000, // Longer timeout for LLM calls
       );
+      
+      if (result.ok && result.body) {
+        // Transform Maestra response to simple format for chat sidebar
+        return res.json({
+          response: result.body.answer || result.body.response || "No response",
+          session_id: result.body.session_id || sessionId,
+          sources: result.body.sources || [],
+        });
+      }
+      
       return res.status(result.status).json(result.body);
     } catch (error: any) {
-      return res.status(503).json({ error: "brain_unavailable", upstream: TGIF_BRAIN_URL, detail: error?.message || String(error) });
+      return res.status(503).json({ error: "brain_unavailable", upstream: BRAIN_URL, detail: error?.message || String(error) });
     }
   });
 
   app.post("/api/brain/log_use", async (req, res) => {
     try {
       const result = await fetchJsonWithTimeout(
-        `${TGIF_BRAIN_URL}/log_use`,
+        `${BRAIN_URL}/log_use`,
         {
           method: "POST",
           body: JSON.stringify(req.body || {}),
@@ -106,7 +126,7 @@ export async function registerRoutes(
       );
       return res.status(result.status).json(result.body);
     } catch (error: any) {
-      return res.status(503).json({ error: "brain_unavailable", upstream: TGIF_BRAIN_URL, detail: error?.message || String(error) });
+      return res.status(503).json({ error: "brain_unavailable", upstream: BRAIN_URL, detail: error?.message || String(error) });
     }
   });
 
