@@ -83,6 +83,42 @@ export async function registerRoutes(
     }
 
     try {
+      // Gather TGIF context to send with the request
+      const stats = await storage.getStats();
+      const initiatives = await storage.getInitiatives();
+      const franchiseGroups = await storage.getFranchiseGroups();
+      const deliverables = await storage.getDeliverables();
+      
+      // Build rich client context
+      const clientContext = {
+        app: "tgif-hub",
+        stats: {
+          totalInitiatives: stats.totalInitiatives,
+          runningAgents: stats.runningAgents,
+          franchiseGroupsTotal: stats.franchiseGroupsTotal,
+          franchiseGroupsCompleted: stats.franchiseGroupsCompleted,
+          deliverables: stats.deliverables,
+          openIssues: stats.openIssues,
+        },
+        current_initiatives: initiatives.slice(0, 5).map(i => ({
+          name: i.name,
+          type: i.type,
+          status: i.status,
+          description: i.description,
+        })),
+        franchise_groups: franchiseGroups.slice(0, 5).map(g => ({
+          name: g.name,
+          status: g.status,
+          progress: g.progress,
+        })),
+        deliverables_list: deliverables.slice(0, 5).map(d => ({
+          title: d.title,
+          type: d.type,
+          status: d.status,
+        })),
+        context_note: "TGIF Phase 2 Franchisee Playbook - tracking rollout progress, deliverables, and franchise group coordination",
+      };
+
       // Call Maestra backend's advisor endpoint for unified brain access
       const result = await fetchJsonWithTimeout(
         `${BRAIN_URL}/api/maestra/advisor/ask`,
@@ -93,7 +129,8 @@ export async function registerRoutes(
             user_id: "alpha_jh",
             message: need,
             mode: "quick",
-            context_hints: ["tgif", "franchise", "rollout"],
+            context_hints: ["tgif", "franchise_rollout", "phase_2_playbook", "gm_ops"],
+            client_context: clientContext,
           }),
         },
         15000, // Longer timeout for LLM calls
