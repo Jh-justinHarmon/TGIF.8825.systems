@@ -279,7 +279,7 @@ export class MemStorage implements IStorage {
         type: "spreadsheet",
         category: "tracking",
         fileUrl: null,
-        sheetUrl: "https://docs.google.com/spreadsheets/d/example-tracker",
+        sheetUrl: "https://www.dropbox.com/scl/fi/vtncasb3a55og0zyc2vc7/TGIF_2026_Rollout_Tracking_UNIFIED.xlsx?rlkey=84rfly8h70iiaynecdzwp6yg7&dl=0",
         createdAt: "2025-11-01",
         updatedAt: "2025-12-18",
         status: "final",
