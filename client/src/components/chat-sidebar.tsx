@@ -273,6 +273,14 @@ export function ChatSidebar() {
               <Button variant="ghost" size="sm" onClick={startNewConversation}>
                 New
               </Button>
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={() => setIsOpen(false)}
+                className="h-8 w-8"
+              >
+                <X className="h-4 w-4" />
+              </Button>
             </div>
           </div>
 
