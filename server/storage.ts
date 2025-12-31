@@ -268,7 +268,7 @@ export class MemStorage implements IStorage {
         type: "document",
         category: "playbook",
         fileUrl: null,
-        sheetUrl: "https://docs.google.com/document/d/example",
+        sheetUrl: "https://www.dropbox.com/scl/fi/9t7rdgu6dq64ogvuh533r/Franchisee-Playbook.docx?rlkey=ote74sv3a3jn1zhwa60b5rpw5&dl=0",
         createdAt: "2025-12-04",
         updatedAt: "2025-12-18",
         status: "review",
