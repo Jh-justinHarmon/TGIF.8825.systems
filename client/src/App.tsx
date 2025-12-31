@@ -6,6 +6,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/app-sidebar";
 import { ThemeToggle } from "@/components/theme-toggle";
+import { ChatSidebar } from "@/components/chat-sidebar";
 import NotFound from "@/pages/not-found";
 import Dashboard from "@/pages/dashboard";
 import Initiatives from "@/pages/initiatives";
@@ -53,6 +54,7 @@ function App() {
                 <Router />
               </main>
             </div>
+            <ChatSidebar />
           </div>
         </SidebarProvider>
         <Toaster />
